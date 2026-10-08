@@ -1,0 +1,140 @@
+.course-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.course-header-code {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--blue);
+}
+
+.course-header-title {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--black);
+}
+
+.course-header-instructor {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.course-header-desc {
+  margin: 6px 0;
+  font-size: 0.88rem;
+  color: #3a3f47;
+  line-height: 1.5;
+  max-width: 48rem;
+}
+
+.course-header-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.course-header-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.course-section-title {
+  margin: 0 0 14px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--black);
+}
+
+.module-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.module-title {
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--black);
+}
+
+.lesson-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lesson-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  background: #f7f9fc;
+  font-size: 0.85rem;
+  color: var(--black);
+}
+
+.lesson-done {
+  color: #1a7d4a;
+  flex-shrink: 0;
+}
+
+.lesson-pending {
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.lesson-type {
+  margin-left: auto;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.course-lesson-material {
+  flex: 0 0 100%;
+  margin: 0 0 0 28px;
+  color: #526078;
+  font-size: .8rem;
+}
+
+.course-lesson-material summary { cursor: pointer; color: var(--blue); font-weight: 650; }
+.course-lesson-material p { margin: 8px 0; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
+.course-lesson-material a { display: inline-block; margin: 2px 0 6px; color: var(--blue); font-weight: 650; }
+
+.lesson-completion-toggle {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.lesson-completion-toggle:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+  border-radius: 50%;
+}
+
+.course-progress-error {
+  margin: 0 0 12px;
+  color: var(--error);
+  font-size: 0.85rem;
+}
+.course-announcement-body { margin: 6px 0 0; color: #485467; font-size: .84rem; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }

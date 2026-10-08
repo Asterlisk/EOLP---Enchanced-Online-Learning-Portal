@@ -1,0 +1,21 @@
+.announcement-item {
+  align-items: flex-start;
+}
+
+.announcement-preview {
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  color: #3a3f47;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.announcement-error {
+  padding: 11px 14px;
+  border: 1px solid #f3c5c3;
+  border-radius: 9px;
+  background: #fff5f4;
+  color: #a22e29;
+  font-size: .84rem;
+}

@@ -1,0 +1,383 @@
+.dash {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Welcome */
+.dash-welcome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 26px 28px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--blue), var(--blue-deep));
+  color: var(--white);
+}
+
+.dash-welcome-eyebrow {
+  margin: 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dash-welcome-title {
+  margin: 6px 0 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  max-width: 32rem;
+}
+
+.dash-welcome-sub {
+  margin: 8px 0 0;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.dash-welcome-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 10px;
+  background: var(--white);
+  color: var(--blue-deep);
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+/* Summary cards */
+.dash-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+/* Two-column grid */
+.dash-grid {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.dash-col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+.dash-section {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.dash-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.dash-section-head h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--black);
+}
+
+.dash-section-head a {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--blue);
+  text-decoration: none;
+}
+
+.dash-section-head a:hover {
+  text-decoration: underline;
+}
+
+.dash-course-row {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+/* Upcoming activities */
+.dash-activity-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dash-activity-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  border-radius: 12px;
+  background: #f7f9fc;
+}
+
+.dash-activity-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.dash-activity-title {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--black);
+}
+
+.dash-activity-meta {
+  margin: 2px 0 0;
+  font-size: 0.76rem;
+  color: var(--muted);
+}
+
+.dash-status {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.status--neutral {
+  background: #eef1f6;
+  color: var(--muted);
+}
+
+.status--progress {
+  background: #fff6e0;
+  color: #9a6b00;
+}
+
+.status--late {
+  background: var(--error-bg);
+  color: var(--error);
+}
+
+.status--done {
+  background: #e7f7ee;
+  color: #1a7d4a;
+}
+
+.dash-activity-btn {
+  flex-shrink: 0;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: 1.5px solid var(--line);
+  background: var(--white);
+  color: var(--black);
+  cursor: pointer;
+}
+
+.dash-activity-btn:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+/* Announcements */
+.dash-announcement-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dash-announcement-item {
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.dash-announcement-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.dash-announcement-title {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--black);
+}
+
+.dash-announcement-meta {
+  margin: 3px 0 6px;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.dash-announcement-preview {
+  margin: 0 0 6px;
+  font-size: 0.85rem;
+  color: #3a3f47;
+  line-height: 1.5;
+}
+
+.dash-announcement-link {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--blue);
+  text-decoration: none;
+}
+
+.dash-announcement-link:hover {
+  text-decoration: underline;
+}
+
+/* Learning progress */
+.dash-progress-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dash-progress-label {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.dash-progress-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.dash-progress-stat-value {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--black);
+}
+
+.dash-progress-stat-label {
+  margin: 2px 0 0;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.dash-recent-activity {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 10px 0 0;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dash-recent-activity li {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 0.78rem;
+}
+
+.dash-recent-activity span {
+  color: #3a3f47;
+}
+
+.dash-recent-activity time {
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+/* Gamification */
+.dash-gamification-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dash-level-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.dash-level-badge {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #eaf1fe;
+  color: var(--blue);
+  font-weight: 800;
+  font-size: 0.85rem;
+  display: grid;
+  place-items: center;
+}
+
+.dash-level-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.dash-level-xp {
+  margin: 0 0 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.dash-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dash-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #f7f9fc;
+  border: 1px solid var(--line);
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #3a3f47;
+}
+
+@media (max-width: 1100px) {
+  .dash-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .dash-welcome {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dash-activity-item {
+    flex-wrap: wrap;
+  }
+}
+
+.dash-error { margin: 0; padding: 10px 14px; border: 1px solid #f3c5c3; border-radius: 9px; background: #fff5f4; color: #a22e29; font-size: .84rem; }
+.dash-no-badges { margin: 0; color: var(--muted); font-size: .8rem; line-height: 1.45; }

@@ -1,0 +1,33 @@
+.grades-courses {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.grade-score {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--black);
+}
+
+.feedback-item {
+  align-items: flex-start;
+}
+
+.feedback-item-comment {
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  color: #3a3f47;
+  line-height: 1.5;
+}
+
+.unread-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--blue);
+  margin-left: 8px;
+}
+
+.grades-note p { color: var(--muted); font-size: .85rem; }

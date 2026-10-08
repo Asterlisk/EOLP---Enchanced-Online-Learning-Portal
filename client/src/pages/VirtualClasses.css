@@ -1,0 +1,14 @@
+.vclass-item {
+  align-items: flex-start;
+}
+
+.vclass-notes {
+  margin: 6px 0 0;
+  font-size: 0.8rem;
+  color: #3a3f47;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.vclass-error { padding: 11px 14px; border: 1px solid #f3c5c3; border-radius: 9px; background: #fff5f4; color: #a22e29; font-size: .84rem; }
+.vclass-no-link { color: #778295; font-size: .78rem; }

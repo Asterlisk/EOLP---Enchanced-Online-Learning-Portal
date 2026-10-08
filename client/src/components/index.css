@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+:root,
+#root {
+  --blue: #3275f2;
+  --blue-deep: #0f3277;
+  --white: #ffffff;
+  --black: #181a18;
+  --muted: #6b7280;
+  --line: #e6e9f0;
+  --error: #d92d20;
+  --error-bg: #fef2f2;
+
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--white);
+  color: var(--black);
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+}
+
+button,
+input {
+  font-family: inherit;
+}

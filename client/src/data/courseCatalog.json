@@ -1,0 +1,404 @@
+[
+  {
+    "id": "c1",
+    "code": "CS301",
+    "title": "Data Structures & Algorithms",
+    "instructor": "Instructor profile pending",
+    "description": "Analyze algorithm efficiency and implement the data structures used to organize, search, and process information.",
+    "schedule": "Mon/Wed 1:00–2:30 PM",
+    "completion": 72,
+    "status": "Ongoing",
+    "modules": [
+      {
+        "id": "m1",
+        "title": "Algorithm Analysis",
+        "lessons": [
+          {
+            "id": "l1",
+            "title": "Growth Rates and Big-O Notation",
+            "type": "Reading",
+            "completed": true
+          },
+          {
+            "id": "l2",
+            "title": "Time and Space Complexity",
+            "type": "Video",
+            "completed": true
+          },
+          {
+            "id": "l3",
+            "title": "Recursion and Recurrence Relations",
+            "type": "Practice",
+            "completed": false
+          }
+        ]
+      },
+      {
+        "id": "m2",
+        "title": "Linear Data Structures",
+        "lessons": [
+          {
+            "id": "l4",
+            "title": "Arrays, Lists, and Dynamic Resizing",
+            "type": "Reading",
+            "completed": true
+          },
+          {
+            "id": "l5",
+            "title": "Stacks, Queues, and Deques",
+            "type": "Lab",
+            "completed": true
+          },
+          {
+            "id": "l6",
+            "title": "Linked List Operations",
+            "type": "Assignment",
+            "completed": false
+          }
+        ]
+      },
+      {
+        "id": "m3",
+        "title": "Trees, Graphs, and Sorting",
+        "lessons": [
+          {
+            "id": "l7",
+            "title": "Binary Search Trees and Heaps",
+            "type": "Video",
+            "completed": true
+          },
+          {
+            "id": "l8",
+            "title": "Graph Traversal: BFS and DFS",
+            "type": "Reading",
+            "completed": false
+          },
+          {
+            "id": "l9",
+            "title": "Sorting and Hashing",
+            "type": "Practice",
+            "completed": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "c2",
+    "code": "IT214",
+    "title": "Web Application Development",
+    "instructor": "Instructor profile pending",
+    "description": "Build accessible, data-driven web applications, from responsive interfaces through API integration and deployment.",
+    "schedule": "Tue/Fri 9:00–10:30 AM",
+    "completion": 45,
+    "status": "Ongoing",
+    "modules": [
+      {
+        "id": "m4",
+        "title": "Web Foundations and Interface Design",
+        "lessons": [
+          {
+            "id": "l10",
+            "title": "Semantic HTML and Accessibility",
+            "type": "Reading",
+            "completed": true
+          },
+          {
+            "id": "l11",
+            "title": "Responsive CSS: Flexbox and Grid",
+            "type": "Lab",
+            "completed": true
+          }
+        ]
+      },
+      {
+        "id": "m5",
+        "title": "Modern Frontend Development",
+        "lessons": [
+          {
+            "id": "l12",
+            "title": "JavaScript Modules and Async Requests",
+            "type": "Video",
+            "completed": true
+          },
+          {
+            "id": "l13",
+            "title": "React Components, State, and Forms",
+            "type": "Lab",
+            "completed": false
+          }
+        ]
+      },
+      {
+        "id": "m6",
+        "title": "Backend Integration and Delivery",
+        "lessons": [
+          {
+            "id": "l14",
+            "title": "REST API Design and Validation",
+            "type": "Reading",
+            "completed": false
+          },
+          {
+            "id": "l15",
+            "title": "Authentication, Testing, and Deployment",
+            "type": "Project",
+            "completed": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "c3",
+    "code": "MATH210",
+    "title": "Discrete Mathematics",
+    "instructor": "Instructor profile pending",
+    "description": "Develop the logic, proof, counting, and graph theory foundations used throughout computing and information technology.",
+    "schedule": "Thu 2:00–5:00 PM",
+    "completion": 90,
+    "status": "Ongoing",
+    "modules": [
+      {
+        "id": "m7",
+        "title": "Logic and Proof",
+        "lessons": [
+          {
+            "id": "l16",
+            "title": "Propositions, Predicates, and Quantifiers",
+            "type": "Reading",
+            "completed": true
+          },
+          {
+            "id": "l17",
+            "title": "Direct, Contrapositive, and Contradiction Proofs",
+            "type": "Practice",
+            "completed": true
+          }
+        ]
+      },
+      {
+        "id": "m8",
+        "title": "Sets, Relations, and Counting",
+        "lessons": [
+          {
+            "id": "l18",
+            "title": "Set Operations and Cartesian Products",
+            "type": "Video",
+            "completed": true
+          },
+          {
+            "id": "l19",
+            "title": "Functions, Relations, and Equivalence",
+            "type": "Reading",
+            "completed": true
+          },
+          {
+            "id": "l20",
+            "title": "Permutations, Combinations, and Recurrences",
+            "type": "Practice",
+            "completed": false
+          }
+        ]
+      },
+      {
+        "id": "m9",
+        "title": "Graph Theory",
+        "lessons": [
+          {
+            "id": "l21",
+            "title": "Paths, Trees, and Connectivity",
+            "type": "Reading",
+            "completed": true
+          },
+          {
+            "id": "l22",
+            "title": "Graph Models in Computing",
+            "type": "Practice",
+            "completed": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "c4",
+    "code": "IT230",
+    "title": "Database Systems",
+    "instructor": "Instructor profile pending",
+    "description": "Model information, design relational schemas, write SQL queries, and reason about integrity, normalization, and transactions.",
+    "schedule": "Mon 3:00–6:00 PM",
+    "completion": 30,
+    "status": "Ongoing",
+    "modules": [
+      {
+        "id": "m10",
+        "title": "Data Modeling and Relational Design",
+        "lessons": [
+          {
+            "id": "l23",
+            "title": "Entity-Relationship Diagrams",
+            "type": "Reading",
+            "completed": true
+          },
+          {
+            "id": "l24",
+            "title": "Relational Schemas and Keys",
+            "type": "Video",
+            "completed": false
+          }
+        ]
+      },
+      {
+        "id": "m11",
+        "title": "SQL and Normalization",
+        "lessons": [
+          {
+            "id": "l25",
+            "title": "SELECT, JOIN, and Aggregate Queries",
+            "type": "Lab",
+            "completed": false
+          },
+          {
+            "id": "l26",
+            "title": "Functional Dependencies and Normal Forms",
+            "type": "Practice",
+            "completed": false
+          }
+        ]
+      },
+      {
+        "id": "m12",
+        "title": "Transactions and Database Practice",
+        "lessons": [
+          {
+            "id": "l27",
+            "title": "Transactions, ACID, and Concurrency",
+            "type": "Reading",
+            "completed": false
+          },
+          {
+            "id": "l28",
+            "title": "Indexes, Security, and Backup",
+            "type": "Project",
+            "completed": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "c5",
+    "code": "IT220",
+    "title": "Human-Computer Interaction",
+    "instructor": "Instructor profile pending",
+    "description": "Apply user research, interaction design, accessibility, and usability evaluation to create effective digital experiences.",
+    "schedule": "Wed 9:00 AM–12:00 PM",
+    "completion": 58,
+    "status": "Ongoing",
+    "modules": [
+      {
+        "id": "m13",
+        "title": "People and Context",
+        "lessons": [
+          {
+            "id": "l29",
+            "title": "User Needs, Personas, and Scenarios",
+            "type": "Reading",
+            "completed": true
+          },
+          {
+            "id": "l30",
+            "title": "Cognitive Models and Inclusive Design",
+            "type": "Video",
+            "completed": true
+          }
+        ]
+      },
+      {
+        "id": "m14",
+        "title": "Prototyping and Evaluation",
+        "lessons": [
+          {
+            "id": "l31",
+            "title": "Information Architecture and Wireframes",
+            "type": "Lab",
+            "completed": true
+          },
+          {
+            "id": "l32",
+            "title": "Usability Testing and Heuristic Review",
+            "type": "Practice",
+            "completed": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "c6",
+    "code": "IT240",
+    "title": "Computer Networks",
+    "instructor": "Instructor profile pending",
+    "description": "Understand network architecture and protocols, then use addressing, routing, and transport concepts to diagnose connectivity.",
+    "schedule": "Tue/Thu 1:00–2:30 PM",
+    "completion": 22,
+    "status": "Ongoing",
+    "modules": [
+      {
+        "id": "m15",
+        "title": "Network Models and Physical Links",
+        "lessons": [
+          {
+            "id": "l33",
+            "title": "OSI and TCP/IP Reference Models",
+            "type": "Reading",
+            "completed": true
+          },
+          {
+            "id": "l34",
+            "title": "Ethernet, Switching, and Wireless LANs",
+            "type": "Video",
+            "completed": false
+          }
+        ]
+      },
+      {
+        "id": "m16",
+        "title": "Addressing and Routing",
+        "lessons": [
+          {
+            "id": "l35",
+            "title": "IPv4 Subnets and IPv6 Addressing",
+            "type": "Practice",
+            "completed": false
+          },
+          {
+            "id": "l36",
+            "title": "Routing, DNS, and Network Troubleshooting",
+            "type": "Lab",
+            "completed": false
+          }
+        ]
+      },
+      {
+        "id": "m17",
+        "title": "Transport and Application Services",
+        "lessons": [
+          {
+            "id": "l37",
+            "title": "TCP, UDP, Ports, and Sockets",
+            "type": "Reading",
+            "completed": false
+          },
+          {
+            "id": "l38",
+            "title": "HTTP, TLS, and Network Security Basics",
+            "type": "Practice",
+            "completed": false
+          }
+        ]
+      }
+    ]
+  }
+]

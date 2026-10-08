@@ -1,0 +1,62 @@
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.profile-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--blue);
+  color: var(--white);
+  font-weight: 800;
+  font-size: 1.3rem;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.profile-name {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--black);
+}
+
+.profile-role {
+  margin: 2px 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-transform: capitalize;
+}
+
+.profile-info-grid {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.profile-info-grid dt {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.profile-info-grid dd {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  color: var(--black);
+}
+
+.profile-settings-btn {
+  align-self: flex-start;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.profile-id { overflow-wrap: anywhere; font-family: ui-monospace, monospace; font-size: .78rem !important; }
+.profile-error { padding: 11px 14px; border: 1px solid #f3c5c3; border-radius: 9px; background: #fff5f4; color: #a22e29; font-size: .84rem; }

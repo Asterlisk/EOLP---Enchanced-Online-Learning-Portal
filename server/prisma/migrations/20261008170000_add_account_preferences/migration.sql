@@ -1,0 +1,5 @@
+ALTER TABLE "User"
+ADD COLUMN "notifyAssignments" BOOLEAN NOT NULL DEFAULT true,
+ADD COLUMN "notifyGrades" BOOLEAN NOT NULL DEFAULT true,
+ADD COLUMN "notifyAnnouncements" BOOLEAN NOT NULL DEFAULT true,
+ADD COLUMN "notifyVirtualClasses" BOOLEAN NOT NULL DEFAULT false;

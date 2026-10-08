@@ -1,0 +1,21 @@
+.material-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: #eaf1fe;
+  color: var(--blue);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.new-tag {
+  margin-left: 8px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--blue);
+  background: #eaf1fe;
+  padding: 2px 7px;
+  border-radius: 999px;
+  vertical-align: middle;
+}

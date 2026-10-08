@@ -1,0 +1,111 @@
+.assignment-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.assignment-course {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--blue);
+}
+
+.assignment-title {
+  margin: 4px 0 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--black);
+}
+
+.assignment-due {
+  margin: 0 0 10px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.assignment-instructions {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #3a3f47;
+  line-height: 1.6;
+}
+
+.submission-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 480px;
+}
+
+.submission-file {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  border: 1.5px dashed var(--line);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.submission-file:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.submission-text-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--black);
+}
+
+.submission-text-label textarea {
+  font: inherit;
+  font-size: 0.88rem;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1.5px solid var(--line);
+  resize: vertical;
+}
+
+.submission-text-label textarea:focus {
+  outline: none;
+  border-color: var(--blue);
+}
+
+.submission-success {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #1a7d4a;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.feedback-box {
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 10px;
+  background: #f7f9fc;
+}
+
+.feedback-box-label {
+  margin: 0 0 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.feedback-box-text {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #3a3f47;
+  line-height: 1.5;
+}

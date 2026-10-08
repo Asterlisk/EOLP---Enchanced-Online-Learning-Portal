@@ -1,0 +1,22 @@
+[Unit]
+Description=BestLink EOLP API
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=eolp
+Group=eolp
+WorkingDirectory=/opt/eolp/server
+Environment=NODE_ENV=production
+EnvironmentFile=/etc/eolp/eolp.env
+ExecStart=/usr/bin/node /opt/eolp/server/server.js
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/eolp/server/uploads
+
+[Install]
+WantedBy=multi-user.target

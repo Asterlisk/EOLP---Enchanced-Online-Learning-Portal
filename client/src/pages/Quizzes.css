@@ -1,0 +1,11 @@
+.quiz-score {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--black);
+}
+
+.quiz-score--pending {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+}

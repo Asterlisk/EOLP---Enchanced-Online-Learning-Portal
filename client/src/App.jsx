@@ -59,7 +59,7 @@ export default function App() {
   return (
     <main className="app-container">
       <section className="app-blue-container">
-        <img src="src/assets/icon.png" alt="Bestilink Logo"/>
+        <img src="/bestlink-icon.png" alt="BestLink Logo" />
         <h1>Welcome To EOLP</h1>
         <h2>Your Learning Journey Starts Here</h2>
       </section>

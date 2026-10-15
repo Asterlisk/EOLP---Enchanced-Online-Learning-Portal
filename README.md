@@ -28,7 +28,9 @@ An authenticated administrator can issue a temporary password in User Management
 
 ## Email OTP sign-in
 
-Users sign in with their password and a six-digit email code. Add an email to new accounts when creating them; existing accounts can have an email added in User Management. Before the first OTP login, set the administrator's email from the server with `npm run admin:set-email -- <admin-username> <email>`. Set `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD`, and `SMTP_FROM` in the protected server environment. Apply the `20261015120000_add_email_otp` Prisma migration before restarting the API. Codes expire after 10 minutes and are limited to five attempts.
+Users sign in with their password and a six-digit email code. Non-admin accounts need an email saved during account creation or in User Management. Admin codes are sent to `ADMIN_OTP_EMAIL`. Configure `RESEND_API_KEY`, `RESEND_FROM`, and `ADMIN_OTP_EMAIL` in the protected server environment; never commit the API key. Apply the `20261015120000_add_email_otp` Prisma migration on a database only once before restarting the API. Codes expire after 10 minutes and are limited to five attempts.
+
+For local development, use a separate development database when possible. To intentionally connect the local backend to the server database, keep an SSH tunnel open and set the local `DATABASE_URL` host and port to the tunnel endpoint; do not run migrations against the live database unless a schema change is planned.
 
 ## Data and secrets
 

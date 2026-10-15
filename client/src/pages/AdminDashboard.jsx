@@ -163,7 +163,7 @@ export default function AdminDashboard() {
             <label>Username<input value={form.username} onChange={(event) => setForm({ ...form, username: event.target.value })} minLength={3} maxLength={80} autoComplete="off" required /></label>
             <label>Email for OTP<input type="email" value={form.email} onChange={(event) => setForm({ ...form, email: event.target.value })} maxLength={254} autoComplete="email" required /></label>
             <label>Temporary password<input type="password" value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} minLength={8} maxLength={200} autoComplete="new-password" required /><small>At least 8 characters</small></label>
-            <label>Account role<select value={form.role} onChange={(event) => setForm({ ...form, role: event.target.value })}><option value="STUDENT">Student</option><option value="PROFESSOR">Teacher</option><option value="ADMIN">Administrator</option></select></label>
+            <label>Account role<select value={form.role} onChange={(event) => setForm({ ...form, role: event.target.value })}><option value="STUDENT">Student</option><option value="PROFESSOR">Teacher</option></select><small>Administrator accounts are created only with a server command.</small></label>
             <button className="admin-button admin-button--primary" type="submit" disabled={saving}><UserPlus size={16} /> Create account</button>
           </form>
         </section>
@@ -209,4 +209,5 @@ export default function AdminDashboard() {
     </main>
   );
 }
+
 

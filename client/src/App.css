@@ -153,19 +153,7 @@ body {
   font-size: 0.8rem;
 }
 
-.login-checkbox {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--muted);
-  cursor: pointer;
-}
-
-.login-checkbox input {
-  width: 14px;
-  height: 14px;
-  accent-color: var(--blue);
-}
+.login-otp-hint { margin: -8px 0 0; color: var(--muted); font-size: .85rem; line-height: 1.45; }
 
 .login-link {
   color: var(--blue);
@@ -176,6 +164,8 @@ body {
 .login-link:hover {
   text-decoration: underline;
 }
+
+.login-back { align-self: center; border: 0; background: transparent; font: inherit; cursor: pointer; }
 
 .login-btn {
   font: inherit;

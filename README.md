@@ -26,6 +26,10 @@ For a local development database that has no migration history yet, use Prisma's
 
 An authenticated administrator can issue a temporary password in User Management. If the administrator is locked out, run `npm run admin:reset-password -- <admin-username>` from `server/` on a machine with access to the production database. The generated password is printed once; share it securely and ask the user to change it after sign-in.
 
+## Email OTP sign-in
+
+Users sign in with their password and a six-digit email code. Add an email to new accounts when creating them; existing accounts can have an email added in User Management. Before the first OTP login, set the administrator's email from the server with `npm run admin:set-email -- <admin-username> <email>`. Set `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD`, and `SMTP_FROM` in the protected server environment. Apply the `20261015120000_add_email_otp` Prisma migration before restarting the API. Codes expire after 10 minutes and are limited to five attempts.
+
 ## Data and secrets
 
 Environment files, build output, dependencies, logs, and uploaded assignment files are excluded from Git. The demo seed requires explicit `SEED_INSTRUCTOR_PASSWORD` and `SEED_STUDENT_PASSWORD` values.

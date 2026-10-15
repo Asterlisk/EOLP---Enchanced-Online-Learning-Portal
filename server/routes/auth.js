@@ -3,8 +3,11 @@ const bcrypt = require("bcrypt");
 const prisma = require("../db");
 const jwt = require("jsonwebtoken");
 const authenticateToken = require("../middleware/authMiddleware")
+const crypto = require("node:crypto");
+const { sendLoginCode } = require("../services/email");
 
 const router = express.Router();
+const hashOtp = (code) => crypto.createHmac("sha256", process.env.JWT_SECRET).update(code).digest("hex");
 
 router.post("/register", authenticateToken, async (req, res) => {
   try {
@@ -19,13 +22,14 @@ router.post("/register", authenticateToken, async (req, res) => {
       return res.status(403).json({ message: "Administrator access is required to create accounts." });
     }
 
-    const { username, password } = req.body;
+    const { username, password, email, role } = req.body;
     const normalizedUsername = typeof username === "string" ? username.trim() : "";
+    const normalizedEmail = typeof email === "string" ? email.trim().toLowerCase() : "";
 
     // Check that both fields were provided
-    if (normalizedUsername.length < 3 || normalizedUsername.length > 80 || typeof password !== "string" || password.length < 8 || password.length > 200) {
+    if (normalizedUsername.length < 3 || normalizedUsername.length > 80 || typeof password !== "string" || password.length < 8 || password.length > 200 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail) || normalizedEmail.length > 254 || !["STUDENT", "PROFESSOR", "ADMIN"].includes(role)) {
       return res.status(400).json({
-        message: "Enter a username between 3 and 80 characters and a password between 8 and 200 characters.",
+        message: "Enter a valid username, email, password, and account role.",
       });
     }
 
@@ -47,11 +51,14 @@ router.post("/register", authenticateToken, async (req, res) => {
     const user = await prisma.user.create({
       data: {
         username: normalizedUsername,
+        email: normalizedEmail,
         passwordHash,
+        role,
       },
       select: {
         id: true,
         username: true,
+        email: true,
         role: true,
         createdAt: true,
       },
@@ -62,6 +69,7 @@ router.post("/register", authenticateToken, async (req, res) => {
       user,
     });
   } catch (error) {
+    if (error.code === "P2002") return res.status(409).json({ message: "The username or email address is already in use." });
     console.error("Registration error:", error);
 
     return res.status(500).json({
@@ -69,6 +77,11 @@ router.post("/register", authenticateToken, async (req, res) => {
     });
   }
 });
+
+function createSession(user) {
+  const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
+  return { token, user: { id: user.id, username: user.username, role: user.role } };
+}
 
 router.post("/login", async (req, res) => {
   try {
@@ -105,33 +118,71 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    // Create a signed authentication token
-    const token = jwt.sign(
-      {
-        userId: user.id,
-        role: user.role,
-      },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "1h",
-      }
-    );
+    const adminOtpEmail = process.env.ADMIN_OTP_EMAIL?.trim().toLowerCase();
+    const otpEmail = user.role === "ADMIN" ? adminOtpEmail : user.email;
+    if (!otpEmail) {
+      const message = user.role === "ADMIN"
+        ? "Admin OTP email delivery is not configured. Contact the server administrator."
+        : "This account needs an email address for OTP sign-in. Ask an administrator to add one.";
+      return res.status(400).json({ message });
+    }
 
-    return res.status(200).json({
-      message: "Login successful.",
-      token,
-      user: {
-        id: user.id,
-        username: user.username,
-        role: user.role,
-      },
+    const previousOtp = await prisma.loginOtp.findUnique({ where: { userId: user.id } });
+    if (previousOtp && Date.now() - previousOtp.createdAt.getTime() < 60_000) {
+      return res.status(429).json({ message: "A sign-in code was sent recently. Please wait a minute before requesting another." });
+    }
+
+    const code = String(crypto.randomInt(0, 1_000_000)).padStart(6, "0");
+    const codeHash = hashOtp(code);
+    await prisma.loginOtp.upsert({
+      where: { userId: user.id },
+      create: { userId: user.id, codeHash, expiresAt: new Date(Date.now() + 10 * 60_000), attempts: 0 },
+      update: { codeHash, expiresAt: new Date(Date.now() + 10 * 60_000), attempts: 0, createdAt: new Date() },
     });
+    try {
+      await sendLoginCode({ to: otpEmail, code });
+    } catch (emailError) {
+      await prisma.loginOtp.deleteMany({ where: { userId: user.id } });
+      console.error("OTP email delivery error:", emailError);
+      return res.status(503).json({ message: "Could not send your sign-in code. Please contact an administrator." });
+    }
+
+    return res.status(200).json({ message: "A sign-in code was sent to your email.", requiresOtp: true });
   } catch (error) {
     console.error("Login error:", error);
 
     return res.status(500).json({
       message: "Something went wrong while logging in.",
     });
+  }
+});
+
+router.post("/verify-otp", async (req, res) => {
+  const username = typeof req.body.username === "string" ? req.body.username : "";
+  const code = typeof req.body.code === "string" ? req.body.code : "";
+  if (!username || !/^\d{6}$/.test(code)) return res.status(400).json({ message: "Enter your username and six-digit sign-in code." });
+  try {
+    const user = await prisma.user.findUnique({ where: { username }, select: { id: true, username: true, role: true, isActive: true } });
+    if (!user?.isActive) return res.status(401).json({ message: "The sign-in code is invalid or expired." });
+    const challenge = await prisma.loginOtp.findUnique({ where: { userId: user.id } });
+    if (!challenge || challenge.expiresAt <= new Date() || challenge.attempts >= 5) {
+      if (challenge) await prisma.loginOtp.deleteMany({ where: { userId: user.id } });
+      return res.status(401).json({ message: "The sign-in code is invalid or expired. Sign in again to request a new code." });
+    }
+    const submittedHash = Buffer.from(hashOtp(code), "hex");
+    const storedHash = Buffer.from(challenge.codeHash, "hex");
+    const valid = submittedHash.length === storedHash.length && crypto.timingSafeEqual(submittedHash, storedHash);
+    if (!valid) {
+      const attempts = challenge.attempts + 1;
+      if (attempts >= 5) await prisma.loginOtp.deleteMany({ where: { userId: user.id } });
+      else await prisma.loginOtp.update({ where: { userId: user.id }, data: { attempts } });
+      return res.status(401).json({ message: attempts >= 5 ? "Too many incorrect codes. Sign in again to request a new one." : "The sign-in code is incorrect." });
+    }
+    await prisma.loginOtp.deleteMany({ where: { userId: user.id } });
+    return res.json({ message: "Login successful.", ...createSession(user) });
+  } catch (error) {
+    console.error("OTP verification error:", error);
+    return res.status(500).json({ message: "Something went wrong while verifying the sign-in code." });
   }
 });
 
@@ -214,3 +265,4 @@ router.patch("/notification-preferences", authenticateToken, async (req, res) =>
 });
 
 module.exports = router;
+

@@ -7,6 +7,7 @@
     "start": "node server.js",
     "admin:promote": "node scripts/promote-admin.js",
     "admin:reset-password": "node scripts/reset-admin-password.js",
+    "admin:set-email": "node scripts/set-account-email.js",
     "test-account:create": "node scripts/create-test-account.js",
     "postinstall": "prisma skills sync || exit 0"
   },

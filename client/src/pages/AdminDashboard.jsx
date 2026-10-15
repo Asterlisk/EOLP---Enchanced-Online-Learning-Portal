@@ -25,7 +25,8 @@ export default function AdminDashboard() {
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [resetPasswordResult, setResetPasswordResult] = useState(null);
-  const [form, setForm] = useState({ username: "", password: "", role: "STUDENT" });
+  const [form, setForm] = useState({ username: "", email: "", password: "", role: "STUDENT" });
+  const [emailDrafts, setEmailDrafts] = useState({});
 
   async function loadUsers() {
     const data = await requestJson("/admin/users");
@@ -57,7 +58,7 @@ export default function AdminDashboard() {
         body: JSON.stringify(form),
       });
       setUsers((current) => [...current, user].sort((a, b) => a.username.localeCompare(b.username)));
-      setForm({ username: "", password: "", role: "STUDENT" });
+      setForm({ username: "", email: "", password: "", role: "STUDENT" });
       setNotice(`${ROLE_LABELS[user.role]} account created for ${user.username}.`);
     } catch (createError) {
       setError(createError.message);
@@ -123,7 +124,7 @@ export default function AdminDashboard() {
         <div>
           <p className="admin-eyebrow">EOLP · ADMINISTRATION</p>
           <h1>User management</h1>
-          <p>Create accounts and manage user access.</p>
+          <p>Create accounts, assign roles, and manage user access.</p>
         </div>
         <div className="admin-account-actions">
           <span><ShieldCheck size={16} /> {currentUser?.username || "Administrator"}</span>
@@ -160,6 +161,7 @@ export default function AdminDashboard() {
           </div>
           <form className="admin-form" onSubmit={createAccount}>
             <label>Username<input value={form.username} onChange={(event) => setForm({ ...form, username: event.target.value })} minLength={3} maxLength={80} autoComplete="off" required /></label>
+            <label>Email for OTP<input type="email" value={form.email} onChange={(event) => setForm({ ...form, email: event.target.value })} maxLength={254} autoComplete="email" required /></label>
             <label>Temporary password<input type="password" value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} minLength={8} maxLength={200} autoComplete="new-password" required /><small>At least 8 characters</small></label>
             <label>Account role<select value={form.role} onChange={(event) => setForm({ ...form, role: event.target.value })}><option value="STUDENT">Student</option><option value="PROFESSOR">Teacher</option><option value="ADMIN">Administrator</option></select></label>
             <button className="admin-button admin-button--primary" type="submit" disabled={saving}><UserPlus size={16} /> Create account</button>
@@ -185,7 +187,11 @@ export default function AdminDashboard() {
                       <span className="admin-avatar">{user.username.slice(0, 1).toUpperCase()}</span>
                       <div><strong>{user.username}</strong><small>Created {new Date(user.createdAt).toLocaleDateString()}</small></div>
                     </div>
-                    <label className="admin-role-control"><span className="admin-control-label">Role</span><select aria-label={`Role for ${user.username}`} value={user.role} onChange={(event) => updateUser(user, { role: event.target.value })} disabled={saving || isCurrentUser}><option value="STUDENT">Student</option><option value="PROFESSOR">Teacher</option><option value="ADMIN">Administrator</option></select></label>
+                    <div className="admin-role-control"><span className="admin-control-label">Role</span><strong>{ROLE_LABELS[user.role]}</strong></div>
+                    <div className="admin-email-group">
+                      <label className="admin-email-control"><span className="admin-control-label">OTP email</span><input type="email" aria-label={`OTP email for ${user.username}`} value={emailDrafts[user.id] ?? user.email ?? ""} onChange={(event) => setEmailDrafts((drafts) => ({ ...drafts, [user.id]: event.target.value }))} /></label>
+                      <button type="button" className="admin-email-save" onClick={() => updateUser(user, { email: emailDrafts[user.id] ?? user.email ?? "" })} disabled={saving || (emailDrafts[user.id] ?? user.email ?? "") === (user.email ?? "")}>Save</button>
+                    </div>
                     <button type="button" className={`admin-status ${user.isActive ? "admin-status--active" : "admin-status--inactive"}`} onClick={() => updateUser(user, { isActive: !user.isActive })} disabled={saving || isCurrentUser} aria-label={`${user.isActive ? "Deactivate" : "Activate"} ${user.username}`}>
                       <span />{user.isActive ? "Active" : "Inactive"}
                     </button>

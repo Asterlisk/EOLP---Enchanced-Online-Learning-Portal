@@ -6,7 +6,7 @@ const authenticateToken = require("../middleware/authMiddleware");
 
 const router = express.Router();
 const validRoles = new Set(["STUDENT", "PROFESSOR", "ADMIN"]);
-const safeUserFields = { id: true, username: true, role: true, isActive: true, createdAt: true };
+const safeUserFields = { id: true, username: true, email: true, role: true, isActive: true, createdAt: true };
 
 async function requireActiveAdmin(req, res, next) {
   try {
@@ -41,11 +41,13 @@ router.get("/users", async (_req, res) => {
 
 router.post("/users", async (req, res) => {
   const username = typeof req.body.username === "string" ? req.body.username.trim() : "";
+  const email = typeof req.body.email === "string" ? req.body.email.trim().toLowerCase() : "";
   const password = typeof req.body.password === "string" ? req.body.password : "";
   const role = req.body.role;
   if (username.length < 3 || username.length > 80) {
     return res.status(400).json({ message: "Username must be between 3 and 80 characters." });
   }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) return res.status(400).json({ message: "Enter a valid email address for OTP sign-in." });
   if (password.length < 8 || password.length > 200) {
     return res.status(400).json({ message: "Temporary password must be between 8 and 200 characters." });
   }
@@ -53,12 +55,12 @@ router.post("/users", async (req, res) => {
 
   try {
     const user = await prisma.user.create({
-      data: { username, passwordHash: await bcrypt.hash(password, 10), role },
+      data: { username, email, passwordHash: await bcrypt.hash(password, 10), role },
       select: safeUserFields,
     });
     return res.status(201).json({ user });
   } catch (error) {
-    if (error.code === "P2002") return res.status(409).json({ message: "That username is already in use." });
+    if (error.code === "P2002") return res.status(409).json({ message: error.meta?.target?.includes("email") ? "That email address is already assigned to another account." : "That username is already in use." });
     console.error("Create user error:", error);
     return res.status(500).json({ message: "Could not create the account." });
   }
@@ -78,6 +80,7 @@ router.post("/users/:userId/reset-password", async (req, res) => {
       where: { id: target.id },
       data: { passwordHash: await bcrypt.hash(temporaryPassword, 10) },
     });
+    await prisma.loginOtp.deleteMany({ where: { userId: target.id } });
     return res.json({ username: target.username, temporaryPassword });
   } catch (error) {
     console.error("Reset user password error:", error);
@@ -87,30 +90,34 @@ router.post("/users/:userId/reset-password", async (req, res) => {
 
 router.patch("/users/:userId", async (req, res) => {
   const data = {};
-  if (Object.hasOwn(req.body, "role")) {
-    if (!validRoles.has(req.body.role)) return res.status(400).json({ message: "Choose a valid account role." });
-    data.role = req.body.role;
+  if (Object.hasOwn(req.body, "role")) return res.status(400).json({ message: "Account roles are assigned at creation and cannot be changed." });
+  if (Object.hasOwn(req.body, "email")) {
+    const email = typeof req.body.email === "string" ? req.body.email.trim().toLowerCase() : "";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) return res.status(400).json({ message: "Enter a valid email address for OTP sign-in." });
+    data.email = email;
   }
   if (Object.hasOwn(req.body, "isActive")) {
     if (typeof req.body.isActive !== "boolean") return res.status(400).json({ message: "Account status must be active or inactive." });
     data.isActive = req.body.isActive;
   }
   if (!Object.keys(data).length) return res.status(400).json({ message: "No account changes were provided." });
-  if (req.params.userId === req.admin.id && (data.role && data.role !== "ADMIN" || data.isActive === false)) {
-    return res.status(400).json({ message: "You cannot remove your own administrator access or deactivate your account." });
+  if (req.params.userId === req.admin.id && data.isActive === false) {
+    return res.status(400).json({ message: "You cannot deactivate your own account." });
   }
 
   try {
     const target = await prisma.user.findUnique({ where: { id: req.params.userId }, select: safeUserFields });
     if (!target) return res.status(404).json({ message: "Account not found." });
-    const removesActiveAdmin = target.role === "ADMIN" && target.isActive && (data.role && data.role !== "ADMIN" || data.isActive === false);
+    const removesActiveAdmin = target.role === "ADMIN" && target.isActive && data.isActive === false;
     if (removesActiveAdmin) {
       const activeAdminCount = await prisma.user.count({ where: { role: "ADMIN", isActive: true } });
       if (activeAdminCount <= 1) return res.status(400).json({ message: "At least one active administrator must remain." });
     }
     const user = await prisma.user.update({ where: { id: target.id }, data, select: safeUserFields });
+    if (Object.hasOwn(data, "email")) await prisma.loginOtp.deleteMany({ where: { userId: target.id } });
     return res.json({ user });
   } catch (error) {
+    if (error.code === "P2002") return res.status(409).json({ message: "That email address is already assigned to another account." });
     console.error("Update user error:", error);
     return res.status(500).json({ message: "Could not update the account." });
   }

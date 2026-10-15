@@ -9,8 +9,9 @@ export default function App() {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [otp, setOtp] = useState("");
+    const [otpRequired, setOtpRequired] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const [remember, setRemember] = useState(false);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
@@ -24,19 +25,23 @@ export default function App() {
       }
 
       setLoading(true);
-
-      setLoading(true);
       try {
-      const res = await fetch(`${API_BASE}/auth/login`, {
+      const res = await fetch(`${API_BASE}/auth/${otpRequired ? "verify-otp" : "login"}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify(otpRequired ? { username, code: otp } : { username, password }),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
         throw new Error(data.message || "Invalid username or password.");
+      }
+
+      if (data.requiresOtp) {
+        setOtpRequired(true);
+        setError("");
+        return;
       }
 
       localStorage.setItem("token", data.token);
@@ -62,6 +67,7 @@ export default function App() {
       <section className="app-login-container">
         <form className="login-form" onSubmit={handleSubmit} noValidate>
           <h2 className="login-form-title">Log in</h2>
+          {otpRequired && <p className="login-otp-hint">Enter the six-digit code sent to your account email.</p>}
 
           {error && (
             <p className="login-error" role="alert">
@@ -69,7 +75,7 @@ export default function App() {
             </p>
           )}
 
-          <label className="login-field">
+          {!otpRequired && <label className="login-field">
             <span>Username</span>
             <input
               type="text"
@@ -80,9 +86,9 @@ export default function App() {
               onChange={(e) => setUsername(e.target.value)}
               required
             />
-          </label>
+          </label>}
 
-          <label className="login-field">
+          {!otpRequired && <label className="login-field">
             <span>Password</span>
             <div className="login-password-wrap">
               <input
@@ -103,26 +109,23 @@ export default function App() {
                 {showPassword ? "Hide" : "Show"}
               </button>
             </div>
-          </label>
+          </label>}
 
-          <div className="login-row">
-            <label className="login-checkbox">
-              <input
-                type="checkbox"
-                checked={remember}
-                onChange={(e) => setRemember(e.target.checked)}
-              />
-              <span>Remember me</span>
-            </label>
+          {otpRequired && <label className="login-field">
+            <span>One-time code</span>
+            <input type="text" inputMode="numeric" autoComplete="one-time-code" pattern="[0-9]{6}" maxLength={6} value={otp} onChange={(event) => setOtp(event.target.value.replace(/\D/g, ""))} required />
+          </label>}
 
+          {!otpRequired && <div className="login-row">
             <Link to="/forgot-password" className="login-link">
               Forgot password?
             </Link>
-          </div>
+          </div>}
 
           <button type="submit" className="login-btn" disabled={loading}>
-            {loading ? "Signing in…" : "Log in"}
+            {loading ? "Signing in…" : otpRequired ? "Verify code" : "Continue"}
           </button>
+          {otpRequired && <button type="button" className="login-link login-back" onClick={() => { setOtpRequired(false); setOtp(""); setError(""); }}>Back to login</button>}
 
         </form>
 

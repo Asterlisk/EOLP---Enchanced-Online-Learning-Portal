@@ -181,6 +181,8 @@ export default function AdminDashboard() {
             <div className="admin-user-list">
               {filteredUsers.map((user) => {
                 const isCurrentUser = user.id === currentUser?.id;
+                const emailDraft = emailDrafts[user.id] ?? user.email ?? "";
+                const emailChanged = emailDraft !== (user.email ?? "");
                 return (
                   <article className="admin-user-row" key={user.id}>
                     <div className="admin-user-identity">
@@ -188,9 +190,9 @@ export default function AdminDashboard() {
                       <div><strong>{user.username}</strong><small>Created {new Date(user.createdAt).toLocaleDateString()}</small></div>
                     </div>
                     <div className="admin-role-control"><span className="admin-control-label">Role</span><strong>{ROLE_LABELS[user.role]}</strong></div>
-                    <div className="admin-email-group">
-                      <label className="admin-email-control"><span className="admin-control-label">OTP email</span><input type="email" aria-label={`OTP email for ${user.username}`} value={emailDrafts[user.id] ?? user.email ?? ""} onChange={(event) => setEmailDrafts((drafts) => ({ ...drafts, [user.id]: event.target.value }))} /></label>
-                      <button type="button" className="admin-email-save" onClick={() => updateUser(user, { email: emailDrafts[user.id] ?? user.email ?? "" })} disabled={saving || (emailDrafts[user.id] ?? user.email ?? "") === (user.email ?? "")}>Save</button>
+                      <div className="admin-email-group">
+                        <label className="admin-email-control"><span className="admin-control-label">OTP email</span><input type="email" aria-label={`OTP email for ${user.username}`} value={emailDraft} onChange={(event) => setEmailDrafts((drafts) => ({ ...drafts, [user.id]: event.target.value }))} /></label>
+                        {emailChanged && <button type="button" className="admin-email-save" onClick={() => updateUser(user, { email: emailDraft })} disabled={saving}>Save</button>}
                     </div>
                     <button type="button" className={`admin-status ${user.isActive ? "admin-status--active" : "admin-status--inactive"}`} onClick={() => updateUser(user, { isActive: !user.isActive })} disabled={saving || isCurrentUser} aria-label={`${user.isActive ? "Deactivate" : "Activate"} ${user.username}`}>
                       <span />{user.isActive ? "Active" : "Inactive"}
@@ -207,3 +209,4 @@ export default function AdminDashboard() {
     </main>
   );
 }
+

@@ -27,9 +27,9 @@ router.post("/register", authenticateToken, async (req, res) => {
     const normalizedEmail = typeof email === "string" ? email.trim().toLowerCase() : "";
 
     // Check that both fields were provided
-    if (normalizedUsername.length < 3 || normalizedUsername.length > 80 || typeof password !== "string" || password.length < 8 || password.length > 200 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail) || normalizedEmail.length > 254 || !["STUDENT", "PROFESSOR", "ADMIN"].includes(role)) {
+    if (normalizedUsername.length < 3 || normalizedUsername.length > 80 || typeof password !== "string" || password.length < 8 || password.length > 200 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail) || normalizedEmail.length > 254 || !["STUDENT", "PROFESSOR"].includes(role)) {
       return res.status(400).json({
-        message: "Enter a valid username, email, password, and account role.",
+        message: "Enter a valid username, email, password, and choose Student or Teacher. Administrator accounts can only be provisioned from a server command.",
       });
     }
 
@@ -265,4 +265,5 @@ router.patch("/notification-preferences", authenticateToken, async (req, res) =>
 });
 
 module.exports = router;
+
 

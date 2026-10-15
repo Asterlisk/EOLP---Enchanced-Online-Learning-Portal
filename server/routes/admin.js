@@ -5,7 +5,8 @@ const prisma = require("../db");
 const authenticateToken = require("../middleware/authMiddleware");
 
 const router = express.Router();
-const validRoles = new Set(["STUDENT", "PROFESSOR", "ADMIN"]);
+// Administrators are provisioned only with the server-side admin:promote command.
+const validRoles = new Set(["STUDENT", "PROFESSOR"]);
 const safeUserFields = { id: true, username: true, email: true, role: true, isActive: true, createdAt: true };
 
 async function requireActiveAdmin(req, res, next) {
@@ -51,7 +52,7 @@ router.post("/users", async (req, res) => {
   if (password.length < 8 || password.length > 200) {
     return res.status(400).json({ message: "Temporary password must be between 8 and 200 characters." });
   }
-  if (!validRoles.has(role)) return res.status(400).json({ message: "Choose a valid account role." });
+  if (!validRoles.has(role)) return res.status(400).json({ message: "Choose Student or Teacher. Administrator accounts can only be provisioned from a server command." });
 
   try {
     const user = await prisma.user.create({
@@ -252,3 +253,4 @@ router.delete("/courses/:courseId/enrollments/:studentId", async (req, res) => {
 });
 
 module.exports = router;
+

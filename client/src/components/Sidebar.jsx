@@ -44,7 +44,7 @@ export default function Sidebar({ open, onClose }) {
         <div className="sidebar-top">
           <div className="sidebar-brand">
             <div className="sidebar-logo" aria-label="EOLP logo">
-              <img src="/src/assets/icon.png" alt="" />
+              <img src="/bestlink-icon.png" alt="" />
             </div>
             <span className="sidebar-app-name">BestLink EOLP</span>
           </div>
